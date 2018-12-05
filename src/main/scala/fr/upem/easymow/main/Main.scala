@@ -28,5 +28,7 @@ object Main extends App {
     );*/
     LoaderService.loadFromFile("./src/ressources/test.txt").map(t => ApplyCommandService.apply(t)).foreach(t => System.out.println(PrintService.print(t)));
 
+
+
   }
 }
