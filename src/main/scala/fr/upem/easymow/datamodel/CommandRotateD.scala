@@ -1,6 +1,6 @@
 package fr.upem.easymow.datamodel
 
-class CommandRotateD extends Command {
+class CommandRotateD private[datamodel]() extends Command {
   override def execute(tondeuse : Option[Tondeuse]): Option[Tondeuse] = tondeuse match {
     case a if a.isEmpty => None;
     case b if b.get.orientation.get.direction.equals(CardinalFactory.build('N').get.direction) => Some(b.get.copy(orientation = CardinalFactory.build('E')));

@@ -1,6 +1,6 @@
 package fr.upem.easymow.datamodel
 
-class CommandeAvancer extends Command {
+class CommandeAvancer private[datamodel]() extends Command {
   override def execute(tondeuse : Option[Tondeuse]): Option[Tondeuse] = tondeuse match {
     case a if a.isEmpty => None;
     case b if b.get.orientation.get.direction.equals(CardinalFactory.build('N').get.direction) => Some(b.get.copy(position = PositionFactory.buildPosition(b.get.position.get.x, b.get.position.get.y+1, FieldFactory.buildField(b.get.position.get.field.get.length,b.get.position.get.field.get.width ))));
