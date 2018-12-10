@@ -1,5 +1,8 @@
 package fr.upem.easymow.datamodel
 
+import fr.upem.easymow.datamodel.Cardinal.Cardinal
+import fr.upem.easymow.datamodel.Command.Command
+
 object TondeuseFactory {
 
   def buildTondeuse(position : Option[Position], orientation : Option[Cardinal], instructions : List[Option[Command]] ) : Option[Tondeuse] = Tondeuse(position, orientation, instructions) match {

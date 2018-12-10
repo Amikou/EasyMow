@@ -1,5 +1,6 @@
 package fr.upem.easymow.services
 
+import fr.upem.easymow.datamodel.Cardinal._
 import fr.upem.easymow.datamodel.{Cardinal, Position, Tondeuse}
 
 object PrintService {
@@ -15,7 +16,13 @@ object PrintService {
   }
 
   implicit def cardinalnShow: Show[Option[Cardinal]] = new Show[Option[Cardinal]] {
-    override def show(cardinal: Option[Cardinal]): String = s"${cardinal.get.direction}"
+    override def show(cardinal: Option[Cardinal]): String = cardinal match{
+      case a if cardinal.isEmpty => s"";
+      case Some(CardinalNord) => s"${CardinalNord.orientation}";
+      case Some(CardinalEst) => s"${CardinalEst.orientation}";
+      case Some(CardinalOuest) => s"${CardinalOuest.orientation}";
+      case Some(CardinalSud) => s"${CardinalSud.orientation}";
+    }
   }
 
   implicit def tondeuseShow (implicit showP: Show[Option[Position]], showC : Show[Option[Cardinal]] ): Show[Option[Tondeuse]] = new Show[Option[Tondeuse]] {
