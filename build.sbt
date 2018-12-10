@@ -9,6 +9,6 @@ lazy val `fr-upem-easymow` = (project in file(".")).
     name := "EasyMow",
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % Test,
     libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.0" % Test,
-    libraryDependencies += "org.typelevel"   %% "cats-core"   % "1.4.0",
-    libraryDependencies += "org.typelevel"    %% "cats-testkit" % "1.5.0" % Test
+    libraryDependencies += "org.typelevel" %% "cats-core" % "1.4.0",
+    libraryDependencies += "org.typelevel" %% "cats-testkit" % "1.5.0" % Test
   )

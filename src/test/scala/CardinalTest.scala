@@ -1,13 +1,12 @@
 import fr.upem.easymow.datamodel.Cardinal.{CardinalEst, CardinalNord, CardinalOuest, CardinalSud}
-import fr.upem.easymow.datamodel._
 import fr.upem.easymow.factories.CardinalFactory
-import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
+import org.scalatest.{FlatSpec, Matchers}
 
-class CardinalTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks{
+class CardinalTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
 
   "CardinalNord" should "be built from 'N'" in {
-       CardinalFactory.build('N').get should be(CardinalNord)
+    CardinalFactory.build('N').get should be(CardinalNord)
   }
 
   "CardinalEst" should "be built from 'E'" in {
