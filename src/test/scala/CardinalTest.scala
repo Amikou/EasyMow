@@ -1,5 +1,6 @@
 import fr.upem.easymow.datamodel.Cardinal.{CardinalEst, CardinalNord, CardinalOuest, CardinalSud}
 import fr.upem.easymow.datamodel._
+import fr.upem.easymow.factories.CardinalFactory
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 

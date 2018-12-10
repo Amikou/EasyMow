@@ -1,6 +1,7 @@
 package fr.upem.easymow.services
 
 import fr.upem.easymow.datamodel._
+import fr.upem.easymow.factories._
 import fr.upem.easymow.services.PrintService.Show
 
 import scala.io.Source
@@ -22,6 +23,7 @@ object LoaderService {
   //Crée un Field à partir d'une string fromatée : "lenght width"
   private def loadFieldFromStringFile(data : String) : Option[Field] = FieldFactory.buildField(Integer.valueOf(data.split(" ")(0)), Integer.valueOf(data.split(" ")(1)))
 
+  //Appelle les bonnes def pour renvoyer une List[Option[Tondeuse]] à partir d'une string formatée !
   def loadFromString(data : String) : List[Option[Tondeuse]] = loadTondeuses(loadTondeusesFromStringFile(data.split("\n").toList.drop(1)), loadFieldFromStringFile(data.split("\n").toList(0)))
 
   def loadFromFile(filepath : String) : List[Option[Tondeuse]] = loadFromString(Source.fromFile(filepath).getLines().mkString("\n"));

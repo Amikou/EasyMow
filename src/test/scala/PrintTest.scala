@@ -1,4 +1,5 @@
 import fr.upem.easymow.datamodel._
+import fr.upem.easymow.factories.{CardinalFactory, FieldFactory, PositionFactory, TondeuseFactory}
 import fr.upem.easymow.services.PrintService
 import org.scalacheck.Gen
 import org.scalatest.prop.GeneratorDrivenPropertyChecks

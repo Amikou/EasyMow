@@ -2,6 +2,7 @@ package fr.upem.easymow.datamodel
 
 import cats.Eq
 import fr.upem.easymow.datamodel.Cardinal.{CardinalEst, CardinalNord, CardinalOuest, CardinalSud}
+import fr.upem.easymow.factories.PositionFactory
 
 object Command {
 

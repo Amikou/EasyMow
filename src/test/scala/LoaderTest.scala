@@ -1,5 +1,6 @@
 import fr.upem.easymow.datamodel.Command.Command
 import fr.upem.easymow.datamodel._
+import fr.upem.easymow.factories._
 import fr.upem.easymow.services.{LoaderService, PrintService}
 import org.scalacheck.Gen
 import org.scalatest.{FlatSpec, Matchers}

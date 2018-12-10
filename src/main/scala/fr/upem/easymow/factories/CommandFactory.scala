@@ -1,4 +1,4 @@
-package fr.upem.easymow.datamodel
+package fr.upem.easymow.factories
 
 import fr.upem.easymow.datamodel.Command.{Command, CommandAvancer, CommandRotateD, CommandRotateG}
 

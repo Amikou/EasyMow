@@ -1,7 +1,8 @@
-package fr.upem.easymow.datamodel
+package fr.upem.easymow.factories
 
 import fr.upem.easymow.datamodel.Cardinal.Cardinal
 import fr.upem.easymow.datamodel.Command.Command
+import fr.upem.easymow.datamodel.{Position, Tondeuse}
 
 object TondeuseFactory {
 
@@ -14,4 +15,3 @@ object TondeuseFactory {
 
 
 }
-

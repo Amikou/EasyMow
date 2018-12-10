@@ -1,10 +1,13 @@
 import fr.upem.easymow.datamodel._
+import fr.upem.easymow.factories.{CardinalFactory, FieldFactory, PositionFactory, TondeuseFactory}
 import fr.upem.easymow.services.PrintService
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalacheck.Gen
 
 class TondeuseTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
+
+  //Tests for TondeuseFactory. Illegal position argument should be fixed by the program itself, no human interaction needed.
 
   "Position.x <= 0 and Position.y <= 0" should "be 0 and 0" in {
     forAll(Gen.choose(-10, 0), Gen.choose(-10, 0)) { (n1,n2) =>

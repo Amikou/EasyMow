@@ -1,4 +1,6 @@
-package fr.upem.easymow.datamodel
+package fr.upem.easymow.factories
+
+import fr.upem.easymow.datamodel.Field
 
 object FieldFactory {
 
