@@ -4,6 +4,7 @@ import fr.upem.easymow.datamodel._
 import fr.upem.easymow.factories._
 
 import scala.io.Source
+import scala.util.Try
 
 object LoaderService {
 
@@ -11,13 +12,13 @@ object LoaderService {
   // TODO Implement instances of Show typeclass
   // private def loadTondeuse(tondeuse : String)
 
-  def loadFromFile(filepath: String): List[Option[Tondeuse]] = loadFromString(Source.fromFile(filepath).getLines().mkString("\n"));
+  def loadFromFile(filepath: String): Try[List[Option[Tondeuse]]] = Try(loadFromString(Source.fromFile(filepath).getLines().mkString("\n")));
 
   //Appelle les bonnes def pour renvoyer une List[Option[Tondeuse]] à partir d'une string formatée !
-  def loadFromString(data: String): List[Option[Tondeuse]] = loadTondeuses(loadTondeusesFromStringFile(data.split("\n").toList.drop(1)), loadFieldFromStringFile(data.split("\n").toList(0)))
+  def loadFromString(data: String): List[Option[Tondeuse]] = loadTondeuses(loadTondeusesFromStringFile(data.split("\n").toList.drop(1)))(loadFieldFromStringFile(data.split("\n").toList(0)))
 
   //Crée une liste de tondeuse à partir d'une liste d'un tuple de 2 string formaté : <"position_tondeuse_x position_tondeuse_y orientation_tondeuse",List<Char> représentant des instructions<
-  private def loadTondeuses(data: List[(String, String)], field: Option[Field]): List[Option[Tondeuse]] = data.map { case (s1, s2) => s1.split(" ").length match {
+  private def loadTondeuses(data: List[(String, String)]) (field: Option[Field]): List[Option[Tondeuse]] = data.map { case (s1, s2) => s1.split(" ").length match {
     case 3 => TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(Integer.valueOf(s1.split(" ")(0)), Integer.valueOf(s1.split(" ")(1)), field), CardinalFactory.build(s1.split(" ")(2).charAt(0).toUpper), s2.toCharArray.map(c => CommandFactory.buildCommand(c)).toList);
     case _ => None
   }

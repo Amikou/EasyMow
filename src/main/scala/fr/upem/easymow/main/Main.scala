@@ -1,14 +1,24 @@
 package fr.upem.easymow.main
 
+import java.util.logging.Logger
+
 import fr.upem.easymow.services.{ApplyCommandService, LoaderService, PrintService}
+
+import scala.util.{Failure, Success}
 
 object Main extends App {
 
   override def main(args: Array[String]) = {
-    // Welcome to my main class! Only one line to run it and print results ! Enter your file path ! . = Base directory = Project's directory :)
+    // Welcome to the main class!  Enter your file path ! . = Base directory = Project's directory :)
 
     // Note : Les erreurs de position de la tondeuse sont automatiquement rattrapées par le logiciel :
-    //  Un dépassement de la carte? une tondeuse crée dans le néant? Le logiciel la replace pour vous aux valeurs les plus proches des limites du terrain!
-    LoaderService.loadFromFile("./src/ressources/data.txt").map(t => ApplyCommandService.apply(t)).foreach(t => System.out.println(PrintService.print(t)));
+    // Un dépassement de la carte? une tondeuse crée dans le néant? Le logiciel la replace pour vous aux valeurs les plus proches des limites du terrain!
+    // Note : Nos tondeuses volent et s'executent l'une après l'autre permettant de ne pas se soucier d'evntuelles collisions entre tondeuses :)
+    // Note : Traitement de l'exception lancée si on ne trouve pas le fichier. Aucune exception pour le reste !
+    System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tF %1$tT] [%4$-7s] %5$s %n")
+    LoaderService.loadFromFile("./src/ressources/data.txt") match {
+      case Failure(exception) => Logger.getLogger("EasyMow").severe("File unreachable")
+      case Success(value) => value.map(t => ApplyCommandService.apply(t)).foreach(t => Logger.getLogger("EasyMow").info(PrintService.print(t)))
+    }
   }
 }
