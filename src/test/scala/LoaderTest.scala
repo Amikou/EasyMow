@@ -31,7 +31,7 @@ class LoaderTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChec
     }
   }
 
-    "10 10\n1 3 N a\nA" should "build not build Tondeuse" in {
+  "10 10\n1 3 N a\nA" should "build not build Tondeuse" in {
       forAll(Gen.choose(10, 20), Gen.choose(0, 10), Gen.choose(0, 10)) { (field: Int, x: Int, y: Int) =>
         // val tondeuse = new Tondeuse(new Position(x, y), new CardinalNord(), new Field(x+1,y+1));
         val str: String = s"${field} ${field}\n${x} ${y} N  a\nA";
@@ -40,6 +40,10 @@ class LoaderTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChec
         val tondeuse = None
         tondeuseFromStr(0) should equal(tondeuse);
       }
-    }
+  }
+
+  "read an unknown file" should "return None" in{
+    LoaderService.loadFromFile("kaka.kaka") should be(None);
+  }
 
 }

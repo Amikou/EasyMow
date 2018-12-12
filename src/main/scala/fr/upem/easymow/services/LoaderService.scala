@@ -1,10 +1,11 @@
 package fr.upem.easymow.services
 
+import java.nio.file.{Files, Paths}
+
 import fr.upem.easymow.datamodel._
 import fr.upem.easymow.factories._
 
 import scala.io.Source
-import scala.util.Try
 
 object LoaderService {
 
@@ -12,7 +13,10 @@ object LoaderService {
   // TODO Implement instances of Show typeclass
   // private def loadTondeuse(tondeuse : String)
 
-  def loadFromFile(filepath: String): Try[List[Option[Tondeuse]]] = Try(loadFromString(Source.fromFile(filepath).getLines().mkString("\n")));
+  def loadFromFile(filepath: String): Option[List[Option[Tondeuse]]] = Files.exists(Paths.get{filepath}) match{
+    case true => Some(loadFromString(Source.fromFile(filepath).getLines().mkString("\n")));
+    case false => None;
+  }
 
   //Appelle les bonnes def pour renvoyer une List[Option[Tondeuse]] à partir d'une string formatée !
   def loadFromString(data: String): List[Option[Tondeuse]] = loadTondeuses(loadTondeusesFromStringFile(data.split("\n").toList.drop(1)))(loadFieldFromStringFile(data.split("\n").toList(0)))
