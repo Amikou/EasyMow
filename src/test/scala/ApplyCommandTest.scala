@@ -107,4 +107,16 @@ class ApplyCommandTest extends FlatSpec with Matchers with GeneratorDrivenProper
     val newtondeuseresult = tondeuse.get.copy(orientation = CardinalFactory.build('S'), instructions = List.empty);
     Eq[Tondeuse].eqv(newtondeuse.get, newtondeuseresult) should be(true);
   }
+
+  "tondeuse None " should "return tondeuse None" in {
+    ApplyCommandService.apply(None) should be(None);
+  }
+
+  "tondeuse 1 1 E in field 5 5 on None command" should "return tondeuse 1 1 E in field 5 5" in {
+    val l: List[Option[Command]] = List(None);
+    val tondeuse: Option[Tondeuse] = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(1, 1, FieldFactory.buildField(5, 5)), CardinalFactory.build('E'), l);
+    val newtondeuse: Option[Tondeuse] = ApplyCommandService.apply(tondeuse);
+    val newtondeuseresult = tondeuse.get.copy(instructions = List.empty);
+    Eq[Tondeuse].eqv(newtondeuse.get, newtondeuseresult) should be(true);
+  }
 }

@@ -5,8 +5,6 @@ import java.util.logging.Logger
 import fr.upem.easymow.datamodel.Tondeuse
 import fr.upem.easymow.services.{ApplyCommandService, LoaderService, PrintService}
 
-import scala.util.{Failure, Success}
-
 object Main extends App {
 
   override def main(args: Array[String]) = {
@@ -22,8 +20,10 @@ object Main extends App {
     mainDef("./src/ressources/data.txt");
   }
 
-  def mainDef(filePath : String)(implicit load : Option[List[Option[Tondeuse]]] = LoaderService.loadFromFile(filePath)) = load match {
+  def mainDef(filePath: String)(implicit load: Option[List[Option[Tondeuse]]] = LoaderService.loadFromFile(filePath)) = load match {
     case a if load.isEmpty => Logger.getLogger("EasyMow").severe("File unreachable");
-    case _ => load.get.map(t => ApplyCommandService.apply(t)).foreach(t => Logger.getLogger("EasyMow").info(PrintService.print(t)))
+    case _ => load.get.map(t => {
+      Logger.getLogger("EasyMow").info(s"Loaded : ${PrintService.print(t)}"); ApplyCommandService.apply(t);
+    }).foreach(t => Logger.getLogger("EasyMow").info(s"Result : ${PrintService.print(t)}"))
   }
 }

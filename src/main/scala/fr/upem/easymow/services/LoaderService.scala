@@ -13,7 +13,9 @@ object LoaderService {
   // TODO Implement instances of Show typeclass
   // private def loadTondeuse(tondeuse : String)
 
-  def loadFromFile(filepath: String): Option[List[Option[Tondeuse]]] = Files.exists(Paths.get{filepath}) match{
+  def loadFromFile(filepath: String): Option[List[Option[Tondeuse]]] = Files.exists(Paths.get {
+    filepath
+  }) match {
     case true => Some(loadFromString(Source.fromFile(filepath).getLines().mkString("\n")));
     case false => None;
   }
@@ -22,23 +24,21 @@ object LoaderService {
   def loadFromString(data: String): List[Option[Tondeuse]] = loadTondeuses(loadTondeusesFromStringFile(data.split("\n").toList.drop(1)))(loadFieldFromStringFile(data.split("\n").toList(0)))
 
   //Crée une liste de tondeuse à partir d'une liste d'un tuple de 2 string formaté : <"position_tondeuse_x position_tondeuse_y orientation_tondeuse",List<Char> représentant des instructions<
-  private def loadTondeuses(data: List[(String, String)]) (field: Option[Field]): List[Option[Tondeuse]] = data.map { case (s1, s2) => s1.split(" ").length match {
+  private def loadTondeuses(data: List[(String, String)])(field: Option[Field]): List[Option[Tondeuse]] = data.map { case (s1, s2) => s1.split(" ").length match {
     case 3 => TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(Integer.valueOf(s1.split(" ")(0)), Integer.valueOf(s1.split(" ")(1)), field), CardinalFactory.build(s1.split(" ")(2).charAt(0).toUpper), s2.toCharArray.map(c => CommandFactory.buildCommand(c)).toList);
     case _ => None
   }
   }
+
   //Crée une liste d'un tuple de 2 string à utiliser pour loadTondeuse à partir d'une liste de string où chaque string est soit les infos de la tondeuse
   // soit les instructions pour cette tondeuse. Mieux vaut qu'il y ait des instructions pour chaque tondeuse ...
   private def loadTondeusesFromStringFile(data: List[String]): List[(String, String)] = data.filter(s => s.contains(" ")) zip data.filter(s => !s.contains(" "));
 
   //Crée un Field à partir d'une string fromatée : "lenght width"
-  private def loadFieldFromStringFile(data: String): Option[Field] = data.split(" ").length match{
+  private def loadFieldFromStringFile(data: String): Option[Field] = data.split(" ").length match {
     case 2 => FieldFactory.buildField(Integer.valueOf(data.split(" ")(0)), Integer.valueOf(data.split(" ")(1)))
     case _ => None
   }
-
-
-
 
 
   // TODO Implement print function
