@@ -47,3 +47,7 @@ Choix d'implémentation :
         Les tondeuses détruites n'occupent plus de position. Ex : une tondeuse x (1,1) se déplaçant en (1,2) alors qu'une autre
         tondeuse y (1,2) existe, fera s'auitodétruire la tondeuse x. Par suite, déplacer une tondeuse z (0,1) en (1,1) ne pose
         aucun problème.
+        
+        
+        
+Fait avec SBT et Intellij. Avec intellij il suffit de check from version control le projet avec git, ensuite d'import avec sbt, d'attendre un peu ( vérifier le sbt shell qu'il fasse le build ) et ensuite on peut run ! Le main se trouve dans le package fr.upem.easymow.main et le fichier txt de config dans ressources.
