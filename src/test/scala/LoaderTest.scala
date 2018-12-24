@@ -12,30 +12,30 @@ class LoaderTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChec
     forAll(Gen.choose(10, 20), Gen.choose(0, 10), Gen.choose(0, 10)) { (field: Int, x: Int, y: Int) =>
       // val tondeuse = new Tondeuse(new Position(x, y), new CardinalNord(), new Field(x+1,y+1));
       val str: String = s"${field} ${field}\n${x} ${y} N\nA";
-      val tondeuseFromStr: List[Option[Tondeuse]] = LoaderService.loadFromString(str);
+      val tondeuseFromStr: List[Option[Tondeuse]] = LoaderService.loadHubFromString(str).get.tondeuses;
       val l: List[Option[Command]] = List(CommandFactory.buildCommand('A'));
-      val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(x, y, FieldFactory.buildField(field, field)), CardinalFactory.build('N'), l);
+      val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(x)(y)(FieldFactory.buildField(field)(field))())(CardinalFactory.build('N'))(l);
       tondeuseFromStr(0) should equal(tondeuse);
       tondeuseFromStr(0).size should be(1);
     }
   }
 
-  "10 10 a\n1 3 N\nA" should "build not build Tondeuse" in {
+  "10 10 a\n1 3 N\nA" should "not build Tondeuse" in {
     forAll(Gen.choose(10, 20), Gen.choose(0, 10), Gen.choose(0, 10)) { (field: Int, x: Int, y: Int) =>
       // val tondeuse = new Tondeuse(new Position(x, y), new CardinalNord(), new Field(x+1,y+1));
       val str: String = s"${field} ${field}  a\n${x} ${y} N\nA";
-      val tondeuseFromStr: List[Option[Tondeuse]] = LoaderService.loadFromString(str);
+      val tondeuseFromStr: List[Option[Tondeuse]] = LoaderService.loadHubFromString(str).get.tondeuses;
       val l: List[Option[Command]] = List(CommandFactory.buildCommand('A'));
       val tondeuse = None
       tondeuseFromStr(0) should equal(tondeuse);
     }
   }
 
-  "10 10\n1 3 N a\nA" should "build not build Tondeuse" in {
+  "10 10\n1 3 N a\nA" should "not build Tondeuse" in {
     forAll(Gen.choose(10, 20), Gen.choose(0, 10), Gen.choose(0, 10)) { (field: Int, x: Int, y: Int) =>
       // val tondeuse = new Tondeuse(new Position(x, y), new CardinalNord(), new Field(x+1,y+1));
       val str: String = s"${field} ${field}\n${x} ${y} N  a\nA";
-      val tondeuseFromStr: List[Option[Tondeuse]] = LoaderService.loadFromString(str);
+      val tondeuseFromStr: List[Option[Tondeuse]] = LoaderService.loadHubFromString(str).get.tondeuses;
       val l: List[Option[Command]] = List(CommandFactory.buildCommand('A'));
       val tondeuse = None
       tondeuseFromStr(0) should equal(tondeuse);
@@ -43,7 +43,7 @@ class LoaderTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChec
   }
 
   "read an unknown file" should "return None" in {
-    LoaderService.loadFromFile("kaka.kaka") should be(None);
+    LoaderService.loadHubFromFile("kaka.kaka").get.tondeuses should be(List.empty);
   }
 
 }

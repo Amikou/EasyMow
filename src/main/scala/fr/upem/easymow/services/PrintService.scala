@@ -25,7 +25,7 @@ object PrintService {
 
   implicit def tondeuseShow(implicit showP: Show[Option[Position]], showC: Show[Option[Cardinal]]): Show[Option[Tondeuse]] = new Show[Option[Tondeuse]] {
     override def show(tondeuse: Option[Tondeuse]): String = tondeuse match {
-      case None => "Mow imploded :("
+      case None => "Mow destroyed :("
       case _ => s"${showP.show(tondeuse.get.position)} ${showC.show(tondeuse.get.orientation)}"
     }
   }

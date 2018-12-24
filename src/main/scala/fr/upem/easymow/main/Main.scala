@@ -2,7 +2,8 @@ package fr.upem.easymow.main
 
 import java.util.logging.Logger
 
-import fr.upem.easymow.datamodel.Tondeuse
+import fr.upem.easymow.datamodel.{Tondeuse, TondeuseHub}
+import fr.upem.easymow.factories.{PositionFactory, TondeuseFactory}
 import fr.upem.easymow.services.{ApplyCommandService, LoaderService, PrintService}
 
 object Main extends App {
@@ -17,13 +18,26 @@ object Main extends App {
 
 
     System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tF %1$tT] [%4$-7s] %5$s %n");
-    mainDef("./src/ressources/data.txt");
+    mainDef("./src/ressources/data.txt"); // Magic Line ! Use it ! Move your mows !
   }
 
-  def mainDef(filePath: String)(implicit load: Option[List[Option[Tondeuse]]] = LoaderService.loadFromFile(filePath)) = load match {
+  def mainDef(filePath: String)(implicit load: Option[TondeuseHub] = LoaderService.loadHubFromFile(filePath)) = load match {
     case a if load.isEmpty => Logger.getLogger("EasyMow").severe("File unreachable");
-    case _ => load.get.map(t => {
-      Logger.getLogger("EasyMow").info(s"Loaded : ${PrintService.print(t)}"); ApplyCommandService.apply(t);
-    }).foreach(t => Logger.getLogger("EasyMow").info(s"Result : ${PrintService.print(t)}"))
+
+    case b => load.get.tondeuses.foldLeft(List.empty[Option[Tondeuse]]) { (list, tondeuse) =>
+      val newtondeuse = tondeuse match {
+        case a if a.isDefined => TondeuseFactory.buildTondeuse(tondeuse.get.copy(position = PositionFactory.buildPosition(tondeuse.get.position.get.x)(tondeuse.get.position.get.y)(tondeuse.get.position.get.field)(list)))
+        case _ => None
+      }
+      val appliedtondeuse = ApplyCommandService.apply(newtondeuse)(list);
+      tondeuse match {
+        case _ => Logger.getLogger("EasyMow").info(s"Loaded : ${PrintService.print(tondeuse)}");
+          Logger.getLogger("EasyMow").info(s"Result : ${PrintService.print(appliedtondeuse)}");
+          list :+ appliedtondeuse;
+
+      }
+    }.foreach(t => Logger.getLogger("").info(PrintService.print(t)));
   }
 }
+
+

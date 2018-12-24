@@ -11,7 +11,7 @@ class TondeuseTest extends FlatSpec with Matchers with GeneratorDrivenPropertyCh
     forAll(Gen.choose(-10, 0), Gen.choose(-10, 0)) { (n1, n2) =>
 
 
-      val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(n1, n2, FieldFactory.buildField(1, 1)), CardinalFactory.build('N'), List.empty);
+      val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(n1)(n2)(FieldFactory.buildField(1)(1))())(CardinalFactory.build('N'))(List.empty);
 
       tondeuse.get.position.get.x should be(0);
       tondeuse.get.position.get.y should be(0);
@@ -23,7 +23,7 @@ class TondeuseTest extends FlatSpec with Matchers with GeneratorDrivenPropertyCh
     forAll(Gen.choose(max, 10 + max), Gen.choose(max, 10 + max)) { (n1, n2) =>
 
 
-      val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(n1, n2, FieldFactory.buildField(max, max)), CardinalFactory.build('N'), List.empty);
+      val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(n1)(n2)(FieldFactory.buildField(max)(max))())(CardinalFactory.build('N'))(List.empty);
 
       tondeuse.get.position.get.x should be(max);
       tondeuse.get.position.get.y should be(max);
@@ -36,7 +36,7 @@ class TondeuseTest extends FlatSpec with Matchers with GeneratorDrivenPropertyCh
     forAll(Gen.choose(-10, 0), Gen.choose(0, max)) { (n1, n2) =>
 
 
-      val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(n1, n2, FieldFactory.buildField(max, max)), CardinalFactory.build('N'), List.empty);
+      val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(n1)(n2)(FieldFactory.buildField(max)(max))())(CardinalFactory.build('N'))(List.empty);
 
       tondeuse.get.position.get.x should be(0);
       tondeuse.get.position.get.y should be(n2);
@@ -49,7 +49,7 @@ class TondeuseTest extends FlatSpec with Matchers with GeneratorDrivenPropertyCh
     forAll(Gen.choose(-10, 0), Gen.choose(0, max)) { (n2, n1) =>
 
 
-      val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(n1, n2, FieldFactory.buildField(max, max)), CardinalFactory.build('N'), List.empty);
+      val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(n1)(n2)(FieldFactory.buildField(max)(max))())(CardinalFactory.build('N'))(List.empty);
 
       tondeuse.get.position.get.x should be(n1);
       tondeuse.get.position.get.y should be(0);
@@ -62,7 +62,7 @@ class TondeuseTest extends FlatSpec with Matchers with GeneratorDrivenPropertyCh
     forAll(Gen.choose(0, max), Gen.choose(0, max)) { (n1, n2) =>
 
 
-      val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(n1, n2, FieldFactory.buildField(max, max)), CardinalFactory.build('N'), List.empty);
+      val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(n1)(n2)(FieldFactory.buildField(max)(max))())(CardinalFactory.build('N'))(List.empty);
 
       tondeuse.get.position.get.x should be(n1);
       tondeuse.get.position.get.y should be(n2);
