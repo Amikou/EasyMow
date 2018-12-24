@@ -12,11 +12,11 @@ class CollisionTest extends FlatSpec with Matchers with GeneratorDrivenPropertyC
     val l: List[Option[Command]] = List(CommandFactory.buildCommand('A'));
     val tondeuses: List[Option[Tondeuse]] = List(TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(1)(2)(FieldFactory.buildField(5)(5))())(CardinalFactory.build('S'))(l));
     val tondeuse: Option[Tondeuse] = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(1)(1)(FieldFactory.buildField(5)(5))())(CardinalFactory.build('N'))(l);
-    val newtondeuse: Option[Tondeuse] = ApplyCommandService.apply(tondeuse)(tondeuses);
+    val newtondeuse: Option[Tondeuse] = ApplyCommandService.apply(tondeuse.get)(tondeuses);
     newtondeuse should be(None);
   }
 
-  "Loading antoher tondeuse on an existing tondeuse's position" should "not be None" in {
+  "Loading antoher tondeuse on an existing tondeuse's position" should "be None" in {
     forAll(Gen.choose(10, 20), Gen.choose(0, 10), Gen.choose(0, 10)) { (field: Int, x: Int, y: Int) =>
       val str: String = s"${field} ${field}\n${x} ${y} N\nA\n${x} ${y} E\nD";
       val tondeuseFromStr: Option[TondeuseHub] = LoaderService.loadHubFromString(str);

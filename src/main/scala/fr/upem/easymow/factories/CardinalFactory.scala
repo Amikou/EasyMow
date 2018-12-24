@@ -4,7 +4,6 @@ import fr.upem.easymow.datamodel.Cardinal._
 
 object CardinalFactory {
 
-  // TODO Implement print function
   def build[A](a: A)(implicit ev: Build[A]): Option[Cardinal] = ev.build(a)
 
   implicit val buildCardinalFromString: Build[String] = new Build[String] {

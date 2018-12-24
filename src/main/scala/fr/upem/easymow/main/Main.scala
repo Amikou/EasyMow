@@ -32,7 +32,10 @@ object Main extends App {
         case a if a.isDefined => TondeuseFactory.buildTondeuse(tondeuse.get.copy(position = PositionFactory.buildPosition(tondeuse.get.position.get.x)(tondeuse.get.position.get.y)(tondeuse.get.position.get.field)(newlist)))
         case _ => None
       }
-      val appliedtondeuse = ApplyCommandService.apply(newtondeuse)(newlist);
+      val appliedtondeuse = newtondeuse match {
+        case a if a.isDefined =>ApplyCommandService.apply(a.get)(newlist)
+        case _ => None
+      };
       tondeuse match {
         case _ => /*Logger.getLogger("EasyMow").info(s"Loaded : ${PrintService.print(tondeuse)}");*/
           Logger.getLogger("EasyMow").info(s"Result : ${PrintService.print(appliedtondeuse)}");

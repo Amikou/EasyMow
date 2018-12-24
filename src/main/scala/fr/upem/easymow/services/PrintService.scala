@@ -5,10 +5,8 @@ import fr.upem.easymow.datamodel.{Position, Tondeuse}
 
 object PrintService {
 
-  // TODO Implement print function
   def print[A](a: A)(implicit ev: Show[A]): String = ev.show(a)
 
-  // TODO Implement instances of Show typeclass
   implicit def positionShow: Show[Option[Position]] = new Show[Option[Position]] {
     override def show(position: Option[Position]): String = s"${position.get.x} ${position.get.y}"
   }
@@ -30,7 +28,6 @@ object PrintService {
     }
   }
 
-  // TODO Define typeclass Show
   trait Show[S] {
     def show(s: S): String
   }
