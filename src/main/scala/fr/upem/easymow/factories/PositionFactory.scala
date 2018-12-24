@@ -1,6 +1,6 @@
 package fr.upem.easymow.factories
 
-import fr.upem.easymow.datamodel.{Field, Position, Tondeuse, TondeuseHub}
+import fr.upem.easymow.datamodel.{Field, Position, Tondeuse}
 
 object PositionFactory {
 
@@ -9,7 +9,7 @@ object PositionFactory {
     case w if tondeusehub.map(t => t match {
       case a if a.isDefined => (a.get.position.get.x, a.get.position.get.y)
       case _ => ;
-    }).count(position => position == (w.x, w.y))>=1 => None; // Tondeuse imploded due to a collision :(
+    }).count(position => position == (w.x, w.y)) >= 1 => None; // Tondeuse imploded due to a collision :(
     case a if a.x < 0 && a.y < 0 => Some(a.copy(0, 0));
     case b if b.x < 0 && b.y > field.get.width => Some(b.copy(0, field.get.width));
     case c if c.x > field.get.length && c.y < 0 => Some(c.copy(field.get.length, 0));
@@ -20,7 +20,6 @@ object PositionFactory {
     case h if (h.y >= 0 && h.y <= field.get.width) && (h.x > field.get.length) => Some(h.copy(field.get.length, h.y));
     case i => Some(i.copy(i.x, i.y));
   }
-
 
 
 }

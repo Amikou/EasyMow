@@ -6,30 +6,22 @@ import fr.upem.easymow.datamodel._
 import fr.upem.easymow.factories._
 
 import scala.io.Source
+
 object LoaderService {
 
 
   // EXPLICATIONS : TondeuseHub a été rajouté APRES avoir fait le sujet initial. Du coup, la gestion des collisions est arrivée seulement après, les tondeuses sont parfaitement autonoms.
   // Cependant, parce qu'une tondeuse est autonome, on a besoin de la recréer en passant la liste des tondeuses pour gérer les collisions.
   // On part d'une liste vide puis on ajoute au fur et à mesure les tondeuses en vérifiant qu'elle n'écrase pas une autre --> la 2ème explose dans ce cas
-  def loadHubFromFile(filepath: String): Option[TondeuseHub] = TondeuseHubFactory.buildTondeuseHub(loadFromFile(filepath)) match{
+  def loadHubFromFile(filepath: String): Option[TondeuseHub] = TondeuseHubFactory.buildTondeuseHub(loadFromFile(filepath)) match {
     case a if a.isEmpty => a;
-    case b => TondeuseHubFactory.buildTondeuseHub(Some(b.get.tondeuses.foldLeft(List.empty[Option[Tondeuse]]){ (list, t) => t match{
-      case a if (t.isDefined)  => list :+ TondeuseFactory.buildTondeuse(t.get.copy(position = PositionFactory.buildPosition(t.get.position.get.x)(t.get.position.get.y)(t.get.position.get.field)(list)));
-      case _ => list :+ t;
-    }
+    case b => TondeuseHubFactory.buildTondeuseHub(Some(b.get.tondeuses.foldLeft(List.empty[Option[Tondeuse]]) { (list, t) =>
+      t match {
+        case a if (t.isDefined) => list :+ TondeuseFactory.buildTondeuse(t.get.copy(position = PositionFactory.buildPosition(t.get.position.get.x)(t.get.position.get.y)(t.get.position.get.field)(list)));
+        case _ => list :+ t;
+      }
     }));
   }
-
-  def loadHubFromString(data : String) = TondeuseHubFactory.buildTondeuseHub(Some(loadFromString(data))) match{
-    case a if a.isEmpty => a;
-    case b => TondeuseHubFactory.buildTondeuseHub(Some(b.get.tondeuses.foldLeft(List.empty[Option[Tondeuse]]){ (list, t) => t match{
-      case a if (t.isDefined)  => list :+ TondeuseFactory.buildTondeuse(t.get.copy(position = PositionFactory.buildPosition(t.get.position.get.x)(t.get.position.get.y)(t.get.position.get.field)(list)));
-      case _ => list :+ t;
-    }
-    }));
-  }
-
 
   private def loadFromFile(filepath: String): Option[List[Option[Tondeuse]]] = Files.exists(Paths.get {
     filepath
@@ -56,6 +48,16 @@ object LoaderService {
   private def loadFieldFromStringFile(data: String): Option[Field] = data.split(" ").length match {
     case 2 => FieldFactory.buildField(Integer.valueOf(data.split(" ")(0)))(Integer.valueOf(data.split(" ")(1)))
     case _ => None
+  }
+
+  def loadHubFromString(data: String) = TondeuseHubFactory.buildTondeuseHub(Some(loadFromString(data))) match {
+    case a if a.isEmpty => a;
+    case b => TondeuseHubFactory.buildTondeuseHub(Some(b.get.tondeuses.foldLeft(List.empty[Option[Tondeuse]]) { (list, t) =>
+      t match {
+        case a if (t.isDefined) => list :+ TondeuseFactory.buildTondeuse(t.get.copy(position = PositionFactory.buildPosition(t.get.position.get.x)(t.get.position.get.y)(t.get.position.get.field)(list)));
+        case _ => list :+ t;
+      }
+    }));
   }
 
 
