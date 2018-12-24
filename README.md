@@ -17,18 +17,18 @@ Le datamodel :
                           
                TondeuseHub : L'objet contenant la liste des tondeuses. Les tondeuses étant indépendantes, il n'est pas 
                              obligatoire de passer par une tondeuseHub.
-                  
-Plusieurs pattern de conception sont utilisés :
+                             
+Patterns de conception :
 
-Pattern factory : Chaque object du datamodel a une factory permettant de construire une instance 
+               Pattern factory : Chaque object du datamodel a une factory permettant de construire une instance 
                   (d'option de) l'objet pour ainsi gérer les différents problèmes. Par exemple, dans le cas d'une tondeuse, 
                   si on essaye de construire une tondeuse à partir d'une option position définie à None, on renvoie None.
-                  
-Pattern Commande : Chaque command a le trait Command, et donc un char représentant la commande à taper pour l'invoquer
-                   ( G, D ou A ) ainsi qu'une def execute sur une Tondeuse et une liste de tondeuse optionnelle 
-                   afin d'éxecuter la commande sur celle-ci en gérant les collisions sur les tondeuses de la liste si précisée.
-                   Cela permet, entre autres, de pouvoir faire un simple fold pour exécuter les instructions d'une tondeuse.
-                   
+               
+               Pattern Commande : Chaque command a le trait Command, et donc un char représentant la commande à taper pour
+                  l'invoquer ( G, D ou A ) ainsi qu'une def execute sur une Tondeuse et une liste de tondeuse optionnelle 
+                  afin d'éxecuter la commande sur celle-ci en gérant les collisions sur les tondeuses de la liste si précisée.
+                  Cela permet, entre autres, de pouvoir faire un simple fold pour exécuter les instructions d'une tondeuse.
+                 
                    
 Choix d'implémentation :  
 
