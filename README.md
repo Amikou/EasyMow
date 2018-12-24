@@ -37,6 +37,7 @@ Choix d'implémentation :
         en fait une tondeuse avec une Position (0,2).
         
         Créer une tondeuse avec une orientation ( Cardinal ) inconnue entrainera l'auto destruction de la tondeuse.
+        
         Au chargement du fichier ( ou de la string ) les collision sont gérées de manière à n'avoir qu'une seule tondeuse
         par position. Tenter de créer une tondeuse sur une position déjà prise par une autre tondeuse entraîne son
         autodestruction
@@ -46,6 +47,3 @@ Choix d'implémentation :
         Les tondeuses détruites n'occupent plus de position. Ex : une tondeuse x (1,1) se déplaçant en (1,2) alors qu'une autre
         tondeuse y (1,2) existe, fera s'auitodétruire la tondeuse x. Par suite, déplacer une tondeuse z (0,1) en (1,1) ne pose
         aucun problème.
-        
-                
-
