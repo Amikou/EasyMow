@@ -12,11 +12,13 @@ class LoaderTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChec
     forAll(Gen.choose(10, 20), Gen.choose(0, 10), Gen.choose(0, 10)) { (field: Int, x: Int, y: Int) =>
       // val tondeuse = new Tondeuse(new Position(x, y), new CardinalNord(), new Field(x+1,y+1));
       val str: String = s"${field} ${field}\n${x} ${y} N\nA";
-      val tondeuseFromStr: List[Option[Tondeuse]] = LoaderService.loadHubFromString(str).get.tondeuses;
-      val l: List[Option[Command]] = List(CommandFactory.buildCommand('A'));
-      val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(x)(y)(FieldFactory.buildField(field)(field))())(CardinalFactory.build('N'))(l);
-      tondeuseFromStr(0) should equal(tondeuse);
-      tondeuseFromStr(0).size should be(1);
+      val tondeuseFromStr: Option[TondeuseHub] = LoaderService.loadHubFromString(str);
+      val l: List[Command] = List(CommandFactory.buildCommand('A').get);
+      val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(x)(y)(FieldFactory.buildField(field)(field))())(CardinalFactory.build('N'))(l).get;
+      tondeuseFromStr.get.tondeuses(0) should equal(tondeuse);
+      tondeuseFromStr.get.tondeuses.size should be(1);
+
+
     }
   }
 
@@ -24,10 +26,7 @@ class LoaderTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChec
     forAll(Gen.choose(10, 20), Gen.choose(0, 10), Gen.choose(0, 10)) { (field: Int, x: Int, y: Int) =>
       // val tondeuse = new Tondeuse(new Position(x, y), new CardinalNord(), new Field(x+1,y+1));
       val str: String = s"${field} ${field}  a\n${x} ${y} N\nA";
-      val tondeuseFromStr: List[Option[Tondeuse]] = LoaderService.loadHubFromString(str).get.tondeuses;
-      val l: List[Option[Command]] = List(CommandFactory.buildCommand('A'));
-      val tondeuse = None
-      tondeuseFromStr(0) should equal(tondeuse);
+      (LoaderService.loadHubFromString(str)) should equal(None);
     }
   }
 
@@ -35,15 +34,12 @@ class LoaderTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChec
     forAll(Gen.choose(10, 20), Gen.choose(0, 10), Gen.choose(0, 10)) { (field: Int, x: Int, y: Int) =>
       // val tondeuse = new Tondeuse(new Position(x, y), new CardinalNord(), new Field(x+1,y+1));
       val str: String = s"${field} ${field}\n${x} ${y} N  a\nA";
-      val tondeuseFromStr: List[Option[Tondeuse]] = LoaderService.loadHubFromString(str).get.tondeuses;
-      val l: List[Option[Command]] = List(CommandFactory.buildCommand('A'));
-      val tondeuse = None
-      tondeuseFromStr(0) should equal(tondeuse);
+      (LoaderService.loadHubFromString(str)) should equal(None);
     }
   }
 
   "read an unknown file" should "return None" in {
-    LoaderService.loadHubFromFile("kaka.kaka").get.tondeuses should be(List.empty);
+    LoaderService.loadHubFromFile("kaka.kaka") should be(None);
   }
 
 }

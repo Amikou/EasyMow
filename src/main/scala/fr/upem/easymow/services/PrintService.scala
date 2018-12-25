@@ -1,31 +1,26 @@
 package fr.upem.easymow.services
 
 import fr.upem.easymow.datamodel.Cardinal._
-import fr.upem.easymow.datamodel.{Position, Tondeuse}
+import fr.upem.easymow.datamodel.{Field, Position, Tondeuse}
 
 object PrintService {
 
   def print[A](a: A)(implicit ev: Show[A]): String = ev.show(a)
 
-  implicit def positionShow: Show[Option[Position]] = new Show[Option[Position]] {
-    override def show(position: Option[Position]): String = s"${position.get.x} ${position.get.y}"
+  implicit def positionShow: Show[Position] = new Show[Position] {
+    override def show(position: Position): String = s"${position.x} ${position.y}"
   }
 
-  implicit def cardinalnShow: Show[Option[Cardinal]] = new Show[Option[Cardinal]] {
-    override def show(cardinal: Option[Cardinal]): String = cardinal match {
-      case a if cardinal.isEmpty => s"";
-      case Some(CardinalNord) => s"${CardinalNord.orientation}";
-      case Some(CardinalEst) => s"${CardinalEst.orientation}";
-      case Some(CardinalOuest) => s"${CardinalOuest.orientation}";
-      case Some(CardinalSud) => s"${CardinalSud.orientation}";
-    }
+  implicit def fieldShow: Show[Field] = new Show[Field] {
+    override def show(field: Field): String = s"Field ${field.length} ${field.width}"
   }
 
-  implicit def tondeuseShow(implicit showP: Show[Option[Position]], showC: Show[Option[Cardinal]]): Show[Option[Tondeuse]] = new Show[Option[Tondeuse]] {
-    override def show(tondeuse: Option[Tondeuse]): String = tondeuse match {
-      case None => "Mow destroyed :("
-      case _ => s"${showP.show(tondeuse.get.position)} ${showC.show(tondeuse.get.orientation)}"
-    }
+  implicit def cardinalShow: Show[Cardinal] = new Show[Cardinal] {
+    override def show(cardinal: Cardinal): String = s"${cardinal.orientation}";
+  }
+
+  implicit def tondeuseShow(implicit showP: Show[Position], showC: Show[Cardinal]): Show[Tondeuse] = new Show[Tondeuse] {
+    override def show(tondeuse: Tondeuse): String = s"Mow ${showP.show(tondeuse.position)} ${showC.show(tondeuse.orientation)}"
   }
 
   trait Show[S] {

@@ -1,4 +1,4 @@
 package fr.upem.easymow.datamodel
 
-case class Field private[datamodel](val length: Int, val width: Int /* , val collisions : List[List[Position]]*/) {
+case class Field private[datamodel](length: Int, width: Int) {
 }

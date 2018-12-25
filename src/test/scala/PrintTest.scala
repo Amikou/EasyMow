@@ -12,7 +12,7 @@ class PrintTest extends FlatSpec with Matchers with GeneratorDrivenPropertyCheck
       // val tondeuse = new Tondeuse(new Position(x, y), new CardinalNord(), new Field(x+1,y+1));
       val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(x)(y)(FieldFactory.buildField(x + 1)(y + 1))())(CardinalFactory.build('N'))(List.empty)
 
-      PrintService.print(tondeuse) should be(s"${tondeuse.get.position.get.x} ${tondeuse.get.position.get.y} N")
+      PrintService.print(tondeuse.get) should be(s"Mow ${tondeuse.get.position.x} ${tondeuse.get.position.y} N")
     }
   }
 }

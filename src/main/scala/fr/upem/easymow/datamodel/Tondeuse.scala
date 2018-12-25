@@ -4,7 +4,7 @@ import cats.kernel.Eq
 import fr.upem.easymow.datamodel.Cardinal._
 import fr.upem.easymow.datamodel.Command.Command
 
-case class Tondeuse private[datamodel](position: Option[Position], val orientation: Option[Cardinal], instructions: List[Option[Command]]) {
+case class Tondeuse (position: Position, orientation: Cardinal, instructions: List[Command]) {
 }
 
 object Tondeuse {

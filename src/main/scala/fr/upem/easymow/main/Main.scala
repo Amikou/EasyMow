@@ -8,7 +8,7 @@ import fr.upem.easymow.services.{ApplyCommandService, LoaderService, PrintServic
 
 object Main extends App {
 
-  override def main(args: Array[String]) = {
+  override def main(args: Array[String]): Unit = {
     // Welcome to the main class!  Enter your file path ! . = Base directory = Project's directory :)
 
     // Note : Les erreurs de position de la tondeuse sont automatiquement rattrapées par le logiciel :
@@ -17,29 +17,26 @@ object Main extends App {
     // Note : Traitement de l'exception lancée si on ne trouve pas le fichier. Aucune exception pour le reste !
 
 
-    System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tF %1$tT] [%4$-7s] %5$s %n");
-    mainDef("./src/ressources/data.txt"); // Magic Line ! Use it ! Move your mows !
+    System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tF %1$tT] [%4$-7s] %5$s %n")
+    mainDef("./src/ressources/data.txt") // Magic Line ! Use it ! Move your mows !
   }
 
   def mainDef(filePath: String)(implicit load: Option[TondeuseHub] = LoaderService.loadHubFromFile(filePath)) = load match {
-    case a if load.isEmpty => Logger.getLogger("EasyMow").severe("File unreachable");
+    case a if a.isEmpty => Logger.getLogger("EasyMow").severe("File unreadable")
 
-    case b => load.get.tondeuses.map(tondeuse => {
-      Logger.getLogger("EasyMow").info(s"Loaded : ${PrintService.print(tondeuse)}"); tondeuse;
-    }).foldLeft(load.get.tondeuses) { (list, tondeuse) =>
-      val newlist = list.drop(1);
-      val newtondeuse = tondeuse match {
-        case a if a.isDefined => TondeuseFactory.buildTondeuse(tondeuse.get.copy(position = PositionFactory.buildPosition(tondeuse.get.position.get.x)(tondeuse.get.position.get.y)(tondeuse.get.position.get.field)(newlist)))
+    case b => b.get.tondeuses.foldLeft(b.get.tondeuses) { (list, tondeuse) =>
+      val newlist = list.drop(1)
+      val newtondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(tondeuse.position.x)(tondeuse.position.y)(Some(tondeuse.position.field))(newlist))(Some(tondeuse.orientation))(tondeuse.instructions)
+      val appliedtondeuse = newtondeuse match {
+        case a if a.isDefined => ApplyCommandService.apply(a.get)(newlist)
         case _ => None
       }
-      val appliedtondeuse = newtondeuse match {
-        case a if a.isDefined =>ApplyCommandService.apply(a.get)(newlist)
-        case _ => None
-      };
-      tondeuse match {
-        case _ => /*Logger.getLogger("EasyMow").info(s"Loaded : ${PrintService.print(tondeuse)}");*/
-          Logger.getLogger("EasyMow").info(s"Result : ${PrintService.print(appliedtondeuse)}");
-          newlist :+ appliedtondeuse;
+      appliedtondeuse match {
+        case a if a.isDefined => /*Logger.getLogger("EasyMow").info(s"Loaded : ${PrintService.print(tondeuse)}");*/
+          Logger.getLogger("EasyMow").info(s"Result : ${PrintService.print(appliedtondeuse.get)}")
+          newlist :+ appliedtondeuse.get
+        case _ => Logger.getLogger("EasyMow").info(s"Result : Mow destroyed")
+          newlist
 
       }
     }

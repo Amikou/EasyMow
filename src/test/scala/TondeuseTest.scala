@@ -13,8 +13,8 @@ class TondeuseTest extends FlatSpec with Matchers with GeneratorDrivenPropertyCh
 
       val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(n1)(n2)(FieldFactory.buildField(1)(1))())(CardinalFactory.build('N'))(List.empty);
 
-      tondeuse.get.position.get.x should be(0);
-      tondeuse.get.position.get.y should be(0);
+      tondeuse.get.position.x should be(0);
+      tondeuse.get.position.y should be(0);
     }
   }
 
@@ -25,8 +25,8 @@ class TondeuseTest extends FlatSpec with Matchers with GeneratorDrivenPropertyCh
 
       val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(n1)(n2)(FieldFactory.buildField(max)(max))())(CardinalFactory.build('N'))(List.empty);
 
-      tondeuse.get.position.get.x should be(max);
-      tondeuse.get.position.get.y should be(max);
+      tondeuse.get.position.x should be(max);
+      tondeuse.get.position.y should be(max);
     }
 
   }
@@ -38,8 +38,8 @@ class TondeuseTest extends FlatSpec with Matchers with GeneratorDrivenPropertyCh
 
       val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(n1)(n2)(FieldFactory.buildField(max)(max))())(CardinalFactory.build('N'))(List.empty);
 
-      tondeuse.get.position.get.x should be(0);
-      tondeuse.get.position.get.y should be(n2);
+      tondeuse.get.position.x should be(0);
+      tondeuse.get.position.y should be(n2);
     }
 
   }
@@ -51,8 +51,8 @@ class TondeuseTest extends FlatSpec with Matchers with GeneratorDrivenPropertyCh
 
       val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(n1)(n2)(FieldFactory.buildField(max)(max))())(CardinalFactory.build('N'))(List.empty);
 
-      tondeuse.get.position.get.x should be(n1);
-      tondeuse.get.position.get.y should be(0);
+      tondeuse.get.position.x should be(n1);
+      tondeuse.get.position.y should be(0);
     }
 
   }
@@ -64,8 +64,8 @@ class TondeuseTest extends FlatSpec with Matchers with GeneratorDrivenPropertyCh
 
       val tondeuse = TondeuseFactory.buildTondeuse(PositionFactory.buildPosition(n1)(n2)(FieldFactory.buildField(max)(max))())(CardinalFactory.build('N'))(List.empty);
 
-      tondeuse.get.position.get.x should be(n1);
-      tondeuse.get.position.get.y should be(n2);
+      tondeuse.get.position.x should be(n1);
+      tondeuse.get.position.y should be(n2);
     }
 
   }
