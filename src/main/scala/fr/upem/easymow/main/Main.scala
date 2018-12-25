@@ -37,7 +37,6 @@ object Main extends App {
           newlist :+ appliedtondeuse.get
         case _ => Logger.getLogger("EasyMow").info(s"Result : Mow destroyed")
           newlist
-
       }
     }
   }

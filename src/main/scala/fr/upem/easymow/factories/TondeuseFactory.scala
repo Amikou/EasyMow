@@ -6,11 +6,6 @@ import fr.upem.easymow.datamodel.{Position, Tondeuse}
 
 object TondeuseFactory {
 
-  def buildTondeuse(tondeuse: Option[Tondeuse]): Option[Tondeuse] = tondeuse match {
-    case a if a.isDefined => buildTondeuse(a.get)
-    case _ => None
-  }
-
   def buildTondeuse(tondeuse: Tondeuse): Option[Tondeuse] = Some(Tondeuse(tondeuse.position, tondeuse.orientation, tondeuse.instructions))
 
 
