@@ -15,7 +15,7 @@ object CardinalFactory {
   }
 
 
-  implicit val buildCardinalFromChar: Build[Char] = {
+  implicit val buildCardinalFromChar: Build[Char] = (c: Char) => c match {
     case CardinalNord.orientation => Some(CardinalNord);
     case CardinalSud.orientation => Some(CardinalSud);
     case CardinalEst.orientation => Some(CardinalEst);

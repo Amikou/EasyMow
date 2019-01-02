@@ -32,8 +32,7 @@ object Main extends App {
         case _ => None
       }
       appliedtondeuse match {
-        case a if a.isDefined => /*Logger.getLogger("EasyMow").info(s"Loaded : ${PrintService.print(tondeuse)}");*/
-          Logger.getLogger("EasyMow").info(s"Result : ${PrintService.print(appliedtondeuse.get)}")
+        case a if a.isDefined => Logger.getLogger("EasyMow").info(s"Result : ${PrintService.print(appliedtondeuse.get)}")
           newlist :+ appliedtondeuse.get
         case _ => Logger.getLogger("EasyMow").info(s"Result : Mow destroyed")
           newlist
